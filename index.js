@@ -30,17 +30,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-/*
+
 mongoose.connect('mongodb+srv://yosho2mendoza:yosho2mendoza@gaming-bd.yyfevqg.mongodb.net/?retryWrites=true&w=majority&appName=gaming-bd')
     .then(() =>{
         console.log("Conectado a la base de datos");
        })
-*/
+/*
  mongoose.connect('mongodb://localhost:27017/games_store')
  .then(() =>{
      console.log("Conectado a la base de datos");
  })
-
+*/
 app.use('/api', [comentarios, noticias,auth, stripe, mongoService]);
 app.listen(generalPort, () => {
     console.log(`Conectado en el puerto:`, generalPort)
