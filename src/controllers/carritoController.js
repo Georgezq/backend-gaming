@@ -46,10 +46,13 @@ async function getGamesBuyById(req, res) {
     const userId = req.params.id_usuario;
 
     try {
-        const cart = await Carrito.findOne({ id_usuario: userId, estado: false });
+        // Encuentra todos los documentos que coincidan con el id_usuario y estado: false
+        const carts = await Carrito.find({ id_usuario: userId, estado: false });
 
-        if (cart && cart.id_juego.length > 0) {
-            res.status(200).json(cart.id_juego);
+        if (carts.length > 0) {
+            // Extrae todos los id_juego de los documentos encontrados
+            const allGames = carts.reduce((acc, cart) => acc.concat(cart.id_juego), []);
+            res.status(200).json(allGames);
         } else {
             res.status(404).json({ mensaje: 'No se encontraron juegos en el carrito de este usuario' });
         }
@@ -60,6 +63,7 @@ async function getGamesBuyById(req, res) {
         });
     }
 }
+
 
 
 // Obtener estado del carrito
