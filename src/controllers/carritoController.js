@@ -91,14 +91,18 @@ async function removeFromCart(req, res) {
     const { id_usuario, id_juego } = req.params;
 
     try {
-        const cart = await Carrito.findOne({ id_usuario });
+        // Buscar carrito por id_usuario y estado true
+        const cart = await Carrito.findOne({ id_usuario, estado: true });
 
         if (cart) {
-            const index = cart.id_juego.indexOf(id_juego);
+            // Encontrar el índice del juego en el arreglo id_juego
+            const index = cart.id_juego.findIndex(gameId => gameId.toString() === id_juego.toString());
             if (index > -1) {
+                // Eliminar el juego del arreglo
                 cart.id_juego.splice(index, 1);
+                // Guardar el carrito actualizado
                 await cart.save();
-                res.status(200).json(cart);
+                res.status(200).json({ mensaje: 'Juego eliminado del carrito', carrito: cart });
             } else {
                 res.status(404).json({ mensaje: 'Juego no encontrado en el carrito' });
             }
