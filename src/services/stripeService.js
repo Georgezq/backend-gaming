@@ -67,7 +67,7 @@ router.post('/checkout', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [...items],
       mode: 'payment',
-      success_url: `${FRONTEND_DOMAIN}/#/carrito?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${FRONTEND_DOMAIN}/#/}`,
       cancel_url: `${FRONTEND_DOMAIN}/#/home`,
       client_reference_id: req.body.userId  // Asegúrate de enviar el userId desde el frontend
     });
